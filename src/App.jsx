@@ -1,4 +1,5 @@
 import logo from "./assets/logo.png";
+import githubLogo from "./assets/github-mark.png"
 import "./App.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -89,7 +90,7 @@ function App() {
         )}
       </section>
       <footer>
-        <p>Made with ♥︎ by Pedro</p>
+        <p>Made with ♥︎ by Pedro</p><a href="https://github.com/pedromndias/appilime-client" target="_blank" rel="noreferrer"><img className="github-logo" src={githubLogo} alt="github logo" /></a>
       </footer>
     </div>
   );
