@@ -5,9 +5,9 @@ const Character = (props) => {
     const {character} = props
   return (
     <div className="each-character">
-        <img src={character.image} alt={character.name} />
+        <img id="profile-pic" src={character.image} alt={character.name} />
         <h3>{character.name}</h3>
-        <p>👤 {character.species}</p>
+        <p>{character.species}</p>
         <p id="location"><img src={locationLogo} alt="location" /> {character.location.name}</p>
     </div>
   )
