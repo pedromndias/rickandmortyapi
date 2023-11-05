@@ -1,33 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import logo from './assets/logo.png'
 import './App.css'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import DotLoader from "react-spinners/DotLoader";
+import Character from './components/Character';
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  // Let's create a state so we manage the characters:
+  const [characters, setCharacters] = useState(null)
+
+  // Now let's get the data from the api. It will be an asynchronous process so we can use an async function. To handle the api call we use a try-catch.
+  const getData = async () => {
+    try {
+      const response = await axios.get("https://rickandmortyapi.com/api/character")
+      // console.log(response.data)
+      setCharacters(response.data.results)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  // We will use a useEffect to getData is invoked when the App component is mounted:
+  useEffect(() => {
+    getData()
+  }, [])
+
+  // Let's create a clause so we have a spinner while the data is loading:
+  if (characters === null) {
+    return <DotLoader color="#36d7b7" size={60}/>
+  }
 
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        
+        <img src={logo} className="logo" alt="logo" />
+        <div className='characters-list'>
+          {characters.map(eachCharacter => <Character character={eachCharacter} key={eachCharacter.id}/>)}
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
